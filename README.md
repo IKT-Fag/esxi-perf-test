@@ -1,3 +1,3 @@
-# ESXi-perf-test
+# esxi-perf-test
 
-//todo
+Measure datastore IOPS over time

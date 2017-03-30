@@ -57,23 +57,3 @@ function Get-IOPS
         Write-Output $AverageIOPS
     }
 }
-
-$VIServer = "192.168.0.12"
-if (!($Credential))
-{
-    $Credential = Get-Credential -UserName "root" -Message "root pw"
-}
-$Samples = 5
-$Datastore = "TheNewCloud (1)"
-
-$Session = Connect-VIServer -Server $VIServer -Credential $Credential
-
-$Data = [ordered]@{}
-$Data.VIServer = $VIServer
-$Data.Read = Get-IOPS -Session $Session -Samples $Samples -DatastoreName $Datastore -Metric "disk.numberRead.Summation"
-$Data.Write = Get-IOPS -Session $Session -Samples $Samples -DatastoreName $Datastore -Metric "disk.numberWrite.Summation"
-#$Data.Timestamp =  (([datetime]::UtcNow) - (Get-Date -Date "1/1/1970")).TotalMilliseconds * 1000000
-
-$Data
-
-Disconnect-VIServer * -Confirm:$False
