@@ -17,7 +17,14 @@ function Get-IopsOverTime
 
     ## Calculate duration
     $StartTime = Get-Date
-    $EndTime = $StartTime.AddHours($Duration.Hours).AddMinutes($Duration.Minutes)
+    if ($Duration.Hours -eq 0 -and $Duration.Minutes -eq 0)
+    {
+        $EndTime = (Get-Date).AddYears(100) ## Basically infinite :P
+    }
+    else
+    {
+        $EndTime = $StartTime.AddHours($Duration.Hours).AddMinutes($Duration.Minutes)
+    }
 
     $Session = Connect-VIServer -Server $VIServer -Credential $Credential
 
@@ -48,5 +55,5 @@ if (!($Credential))
 }
 
 Get-IopsOverTime -VIServer "192.168.0.20" -Credential $Credential `
-    -Samples 5 -Datastore "Smith" -Duration @{Hours=1; Minutes=0} `
+    -Samples 5 -Datastore "Smith" -Duration @{Hours=0; Minutes=0} `
     -Interval 2 -DataFolder "C:\Users\admin\Documents\GitHub\esxi-perf-test\Data" -Verbose
