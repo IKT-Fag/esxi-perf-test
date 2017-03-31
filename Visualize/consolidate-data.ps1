@@ -1,5 +1,6 @@
 $jsonFiles = Get-ChildItem -Path ".\data"
-$jsonConsolidated = ".\consolidate-data.ps1"
+$readFile = "consolidate-data-read.txt"
+$writeFile = "consolidate-data-write.txt"
 
 if (!(Test-Path -Path $jsonConsolidated))
 {
@@ -28,4 +29,4 @@ foreach ($point in $dataPoints)
     $str += $dataStr
 }
 
-$str | Out-File -FilePath ".\consolidate-data-read.txt" -Force
+$str | Out-File -FilePath $readFile -Force
